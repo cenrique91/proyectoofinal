@@ -196,7 +196,7 @@ export let LatLongPref = (req: Request, res: Response)=> {
         misala = i + 1;
         mipref = 1
         res.json({ misala: misala, mipref: mipref });
-        break;
+        return;
       }
     }
   } else if (req.body.pref == 2) {
@@ -212,7 +212,7 @@ export let LatLongPref = (req: Request, res: Response)=> {
         misala = i + 1;
         mipref = 2
         res.json({ misala: misala, mipref: mipref });
-        break;
+        return;
       }
     }
 
@@ -229,7 +229,7 @@ export let LatLongPref = (req: Request, res: Response)=> {
         misala = i + 1;
         mipref = 3
         res.json({ misala: misala, mipref: mipref });
-        break;
+        return;
       }
     }
   }else{
