@@ -173,24 +173,27 @@ export let registrarUsuario = (req: Request, res: Response) => {
 };
 
 export let LatLongPref = (req: Request, res: Response)=> {
+  let pref =req.body.pref;
+  let lat=req.body.lat;
+  let long=req.body.long;
   console.log(
-    `aqui llega las position- lat: ${Number(req.body.lat)} ,
-    long:${Number(req.body.long)},
-    pref: ${Number(req.body.pref)} `
+    `aqui llega las position- lat: ${Number(lat)} ,
+    long:${Number(long)},
+    pref: ${Number(pref)} `
   );
   console.log("Funcion");
   res.json({Mensaje:"Error!!"})
   
   console.log(req.body.pref);
 
-  if (req.body.pref == 1) {
+  if ( pref == 1) {
     for (let i = 0; i < sala01.length; i++) {
       // son negativos por lo tanto cambia de signo
       if (
-        req.body.lat >= sala01[i][3][1] &&
-        req.body.lat <= sala01[i][0][1] &&
-        req.body.long <= sala01[i][0][0] &&
-        req.body.long >= sala01[i][3][0]
+        lat >= sala01[i][3][1] &&
+        lat <= sala01[i][0][1] &&
+        long <= sala01[i][0][0] &&
+        long >= sala01[i][3][0]
       ) {
         console.log(`User  You are in sala ${i + 1} `);
         misala = i + 1;
@@ -199,14 +202,14 @@ export let LatLongPref = (req: Request, res: Response)=> {
         return;
       }
     }
-  } else if (req.body.pref == 2) {
+  } else if (pref == 2) {
     for (let i = 0; i < sala02.length; i++) {
       // son negativos por lo tanto cambia de signo
       if (
-        req.body.lat >= sala02[i][3][1] &&
-        req.body.lat <= sala02[i][0][1] &&
-        req.body.long <= sala02[i][0][0] &&
-        req.body.long >= sala02[i][3][0]
+        lat >= sala02[i][3][1] &&
+        lat <= sala02[i][0][1] &&
+        long <= sala02[i][0][0] &&
+        long >= sala02[i][3][0]
       ) {
         console.log(`User  You are in sala ${i + 1} `);
         misala = i + 1;
@@ -216,14 +219,14 @@ export let LatLongPref = (req: Request, res: Response)=> {
       }
     }
 
-  } else if (req.body.pref == 3) {
+  } else if (pref == 3) {
     for (let i = 0; i < sala01.length; i++) {
       // son negativos por lo tanto cambia de signo
       if (
-        req.body.lat >= sala03[i][3][1] &&
-        req.body.lat <= sala03[i][0][1] &&
-        req.body.long <= sala03[i][0][0] &&
-        req.body.long >= sala03[i][3][0]
+        lat >= sala03[i][3][1] &&
+        lat <= sala03[i][0][1] &&
+        long <= sala03[i][0][0] &&
+        long >= sala03[i][3][0]
       ) {
         console.log(`User  You are in sala ${i + 1} `);
         misala = i + 1;
