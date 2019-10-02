@@ -229,6 +229,8 @@ export function   LatLongPref(req: Request, res: Response) {
         break;
       }
     }
+  }else{
+    res.json({Mensaje:"Error!!"})
   }
 }
 
