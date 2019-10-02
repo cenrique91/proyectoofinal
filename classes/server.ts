@@ -5,6 +5,7 @@ import http from "http";
 import * as socket from "../sockets/socket";
 import { Request, Response, NextFunction } from "express";
 import { mensaje_router } from "../routes/router";
+import { LatLongPref } from "../controllers/firebase";
 
 // var admin = require("firebase-admin");
 // var bodyParser = require("body-parser");
@@ -67,6 +68,29 @@ export default class Server {
       socket.desconectar(cliente, this.io);
     });
   }
+  configurarRutas() {
+    this.app.get('/', (req: Request, res: Response) => {
+      res.status(200).send('Servidor OK!');
+    });
+
+    // this.app.post('/hola', function DataPost(req, res) {
+    //   console.log(' este es mensahe del post ' + req.body.message);
+    // });
+    // this.app.post('/getusuario', getUsuario);
+    this.app.post('/positions', LatLongPref);
+    // this.app.post('/confirmationCode', confirmationCode);
+  }
+  habilitarCORS() {
+    this.app.use((req, res, next) => {
+      // http://127.0.0.1:5500/Frontend/dist/index.html
+      res.header('Access-Control-Allow-Origin', '*');
+      res.header('Access-Control-Allow-Headers', 'Content-type, Authorization');
+      // res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+      res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+      next();
+    });
+  }
+
 
   start(callback: Function) {
     this.httpServer.listen(this.port, callback());

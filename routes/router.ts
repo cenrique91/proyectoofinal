@@ -10,7 +10,7 @@ export let mensaje_router = Router();
 router.get("/enviarmensaje", enviarMensaje);
 // router.get("/buscar", firebase_controller.buscarCoordenadas);
 
-// router.get('/getUsuarioId/:id',firebase_controller.buscarUsuarioId);
+router.get('/getUsuarioId/:id',firebase_controller.buscarUsuarioId);
 router.post("/registrarUsuario", firebase_controller.registrarUsuario);
 
 // router.get("/getUsuarioId", (req: Request, res: Response) => {

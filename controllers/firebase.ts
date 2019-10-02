@@ -1,12 +1,18 @@
 import { Router, Request, Response } from "express";
 import { enviarMensaje } from "./sms";
-import * as coordenadas from "./nivel2";
+import {sala02} from "./nivel2";
+import {sala01} from "./nivel1";
+import {sala03} from "./nivel3";
 
 const accountSid = "AC3f8cb29969036e1427288dc218d27a2b";
 const authToken = "49aa9f42172953a7e823721a1ed32439";
 const client = require("twilio")(accountSid, authToken);
 var admin = require("firebase-admin");
 var bodyParser = require("body-parser");
+var code: any;
+var theNumber: any;
+var misala;
+var mipref;
 admin.initializeApp({
   credential: admin.credential.cert(require("./KEYFB.json")),
   databaseURL: "https://proyectofinalcodigo5-82c87.firebaseio.com"
@@ -25,6 +31,49 @@ export let buscarUsuarioId = (req: Request, res: Response) => {
       res.json(data);
     });
 };
+
+
+// export function confirmationCode(req: any, res1: Response) {
+//   // aca me llega el codigo que pone el usuario
+//   console.log('-----confirmation code------');
+//   console.log(req.body.code);
+//   console.log(code);
+//   if (req.body.code == code) {
+//     // try {
+//     Usuario.exists({ usu_number: theNumber }, (err: any, res: any) => {
+//       if (res == true) {
+//         Usuario.findOne({ 'usu_number': theNumber }, 'usu_nick', function (err: any, person: any) {
+//           if (err) {
+//             console.log(err);
+//           } else {
+//             console.log(person);
+//             res1.json({ succes: 'yea', usuario: person.usu_nick });
+//           }
+//           // Prints "Space Ghost is a talk show host".
+//         });
+//         // redirijo a la sala con todo desbloqueado para que pueda escribir
+//       } else {
+//         const userNick = Math.round(Math.random() * 10000000000)
+//         const usuario = new Usuario({ usu_number: theNumber, usu_nick: userNick });
+//         usuario.save(function (err: any) {
+//           if (err) {
+//             console.log('NOOOO ha sido guardado pe chino');
+//             // saved!
+//           } else {
+//             res1.status(200).json({ succes: 'yea', usuario: userNick });
+//             console.log('esta REguardado');
+//           }
+//         });
+//       }
+//     })
+//     // } catch (err) {
+//     //   console.log(err);
+//     // }
+//   } else {
+//     let fail = 'clave NO correcta';
+//     res1.json(fail);
+//   }
+// }
 // export let buscarCoordenadas = (req: Request, res: Response) => {
 //   let lat = req.body.lat;
 //   let lng = req.body.lng;
@@ -122,6 +171,66 @@ export let registrarUsuario = (req: Request, res: Response) => {
       }
     });
 };
+
+export function LatLongPref(req: Request, res: Response) {
+  console.log(
+    `aqui llega las position- lat: ${Number(req.body.lat)} ,
+    long:${Number(req.body.long)},
+    pref: ${Number(req.body.pref)} `
+  );
+  console.log(req.body.pref);
+
+  if (req.body.pref == 1) {
+    for (let i = 0; i < sala01.length; i++) {
+      // son negativos por lo tanto cambia de signo
+      if (
+        req.body.lat >= sala01[i][3][1] &&
+        req.body.lat <= sala01[i][0][1] &&
+        req.body.long <= sala01[i][0][0] &&
+        req.body.long >= sala01[i][3][0]
+      ) {
+        console.log(`User  You are in sala ${i + 1} `);
+        misala = i + 1;
+        mipref = 1
+        res.json({ misala: misala, mipref: mipref });
+        break;
+      }
+    }
+  } else if (req.body.pref == 2) {
+    for (let i = 0; i < sala02.length; i++) {
+      // son negativos por lo tanto cambia de signo
+      if (
+        req.body.lat >= sala02[i][3][1] &&
+        req.body.lat <= sala02[i][0][1] &&
+        req.body.long <= sala02[i][0][0] &&
+        req.body.long >= sala02[i][3][0]
+      ) {
+        console.log(`User  You are in sala ${i + 1} `);
+        misala = i + 1;
+        mipref = 2
+        res.json({ misala: misala, mipref: mipref });
+        break;
+      }
+    }
+
+  } else if (req.body.pref == 3) {
+    for (let i = 0; i < sala01.length; i++) {
+      // son negativos por lo tanto cambia de signo
+      if (
+        req.body.lat >= sala03[i][3][1] &&
+        req.body.lat <= sala03[i][0][1] &&
+        req.body.long <= sala03[i][0][0] &&
+        req.body.long >= sala03[i][3][0]
+      ) {
+        console.log(`User  You are in sala ${i + 1} `);
+        misala = i + 1;
+        mipref = 3
+        res.json({ misala: misala, mipref: mipref });
+        break;
+      }
+    }
+  }
+}
 
 // export let coordenada = () => {
 //   console.log(sala02.length);

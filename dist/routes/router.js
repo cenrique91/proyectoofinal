@@ -19,7 +19,7 @@ exports.router = express_1.Router();
 exports.mensaje_router = express_1.Router();
 exports.router.get("/enviarmensaje", sms_1.enviarMensaje);
 // router.get("/buscar", firebase_controller.buscarCoordenadas);
-// router.get('/getUsuarioId/:id',firebase_controller.buscarUsuarioId);
+exports.router.get('/getUsuarioId/:id', firebase_controller.buscarUsuarioId);
 exports.router.post("/registrarUsuario", firebase_controller.registrarUsuario);
 // router.get("/getUsuarioId", (req: Request, res: Response) => {
 //   // const id = req.body.id;
