@@ -178,6 +178,9 @@ export function   LatLongPref(req: Request, res: Response) {
     long:${Number(req.body.long)},
     pref: ${Number(req.body.pref)} `
   );
+  console.log("Funcion");
+  res.json({Mensaje:"Error!!"})
+  
   console.log(req.body.pref);
 
   if (req.body.pref == 1) {
