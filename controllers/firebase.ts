@@ -172,7 +172,7 @@ export let registrarUsuario = (req: Request, res: Response) => {
     });
 };
 
-export function   LatLongPref(req: Request, res: Response) {
+export let LatLongPref = (req: Request, res: Response)=> {
   console.log(
     `aqui llega las position- lat: ${Number(req.body.lat)} ,
     long:${Number(req.body.long)},
