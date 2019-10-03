@@ -178,10 +178,11 @@ export let LatLongPref = (req: Request, res: Response)=> {
   let long=req.body.long;
   let misala
   let mipref
+  
   console.log(
-    `aqui llega las position- lat: ${Number(lat)} ,
-    long:${Number(long)},
-    pref: ${Number(pref)} `
+    `aqui llega las position- lat: ${lat} ,
+    long:${long},
+    pref: ${pref} `
   );
   if ( pref == 1) {
   console.log("Back");

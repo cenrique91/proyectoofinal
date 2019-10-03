@@ -171,9 +171,9 @@ exports.LatLongPref = (req, res) => {
     let long = req.body.long;
     let misala;
     let mipref;
-    console.log(`aqui llega las position- lat: ${Number(lat)} ,
-    long:${Number(long)},
-    pref: ${Number(pref)} `);
+    console.log(`aqui llega las position- lat: ${lat} ,
+    long:${long},
+    pref: ${pref} `);
     if (pref == 1) {
         console.log("Back");
         for (let i = 0; i < nivel1_1.sala01.length; i++) {
