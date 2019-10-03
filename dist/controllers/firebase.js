@@ -171,8 +171,8 @@ exports.LatLongPref = (req, res) => {
     let long = req.body.long;
     let misala;
     let mipref;
-    console.log(`aqui llega las position- lat: ${lat} ,
-    long:${long},
+    console.log(`aqui llega las position- lat: ${Number(lat)} ,
+    long:${Number(long)},
     pref: ${pref} `);
     if (pref == 1) {
         console.log("Back");
@@ -194,10 +194,10 @@ exports.LatLongPref = (req, res) => {
     else if (pref == 2) {
         for (let i = 0; i < nivel2_1.sala02.length; i++) {
             // son negativos por lo tanto cambia de signo
-            if (lat >= nivel2_1.sala02[i][3][1] &&
-                lat <= nivel2_1.sala02[i][0][1] &&
-                long <= nivel2_1.sala02[i][0][0] &&
-                long >= nivel2_1.sala02[i][3][0]) {
+            if (lat <= nivel2_1.sala02[i][3][1] &&
+                lat >= nivel2_1.sala02[i][0][1] &&
+                long >= nivel2_1.sala02[i][0][0] &&
+                long <= nivel2_1.sala02[i][3][0]) {
                 console.log(`User  You are in sala ${i + 1} `);
                 misala = i + 1;
                 mipref = 2;
@@ -209,10 +209,10 @@ exports.LatLongPref = (req, res) => {
     else if (pref == 3) {
         for (let i = 0; i < nivel1_1.sala01.length; i++) {
             // son negativos por lo tanto cambia de signo
-            if (lat >= nivel3_1.sala03[i][3][1] &&
-                lat <= nivel3_1.sala03[i][0][1] &&
-                long <= nivel3_1.sala03[i][0][0] &&
-                long >= nivel3_1.sala03[i][3][0]) {
+            if (lat <= nivel3_1.sala03[i][3][1] &&
+                lat >= nivel3_1.sala03[i][0][1] &&
+                long >= nivel3_1.sala03[i][0][0] &&
+                long <= nivel3_1.sala03[i][3][0]) {
                 console.log(`User  You are in sala ${i + 1} `);
                 misala = i + 1;
                 mipref = 3;

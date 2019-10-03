@@ -180,8 +180,8 @@ export let LatLongPref = (req: Request, res: Response)=> {
   let mipref
   
   console.log(
-    `aqui llega las position- lat: ${lat} ,
-    long:${long},
+    `aqui llega las position- lat: ${Number(lat)} ,
+    long:${Number(long)},
     pref: ${pref} `
   );
   if ( pref == 1) {
@@ -208,10 +208,10 @@ export let LatLongPref = (req: Request, res: Response)=> {
     for (let i = 0; i < sala02.length; i++) {
       // son negativos por lo tanto cambia de signo
       if (
-        lat >= sala02[i][3][1] &&
-        lat <= sala02[i][0][1] &&
-        long <= sala02[i][0][0] &&
-        long >= sala02[i][3][0]
+        lat <= sala02[i][3][1] &&
+        lat >= sala02[i][0][1] &&
+        long >= sala02[i][0][0] &&
+        long <= sala02[i][3][0]
       ) {
         console.log(`User  You are in sala ${i + 1} `);
         misala = i + 1;
@@ -225,10 +225,10 @@ export let LatLongPref = (req: Request, res: Response)=> {
     for (let i = 0; i < sala01.length; i++) {
       // son negativos por lo tanto cambia de signo
       if (
-        lat >= sala03[i][3][1] &&
-        lat <= sala03[i][0][1] &&
-        long <= sala03[i][0][0] &&
-        long >= sala03[i][3][0]
+        lat <= sala03[i][3][1] &&
+        lat >= sala03[i][0][1] &&
+        long >= sala03[i][0][0] &&
+        long <= sala03[i][3][0]
       ) {
         console.log(`User  You are in sala ${i + 1} `);
         misala = i + 1;
