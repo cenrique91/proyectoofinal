@@ -166,9 +166,10 @@ export let registrarUsuario = (req: Request, res: Response) => {
           });
       } else {
         let nick=data.telf.usu_nick;
+        console.log("============================================================");
         console.log(data.telf.usu_nick);
         console.log(nick);
-        
+        console.log("============================================================");
         res.status(200).json({
           error: "El numero ingresado ya se encuentra registrado",
           x,nick
