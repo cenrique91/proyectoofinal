@@ -15,6 +15,7 @@ const environments_1 = require("../global/environments");
 const socket_io_1 = __importDefault(require("socket.io"));
 const http_1 = __importDefault(require("http"));
 const socket = __importStar(require("../sockets/socket"));
+const firebase_1 = require("../controllers/firebase");
 // var admin = require("firebase-admin");
 // var bodyParser = require("body-parser");
 // admin.initializeApp({
@@ -56,6 +57,27 @@ class Server {
             socket.mensaje(cliente, this.io);
             // Desconectar
             socket.desconectar(cliente, this.io);
+        });
+    }
+    configurarRutas() {
+        this.app.get('/', (req, res) => {
+            res.status(200).send('Servidor OK!');
+        });
+        // this.app.post('/hola', function DataPost(req, res) {
+        //   console.log(' este es mensahe del post ' + req.body.message);
+        // });
+        // this.app.post('/getusuario', getUsuario);
+        this.app.post('/positions', firebase_1.LatLongPref);
+        // this.app.post('/confirmationCode', confirmationCode);
+    }
+    habilitarCORS() {
+        this.app.use((req, res, next) => {
+            // http://127.0.0.1:5500/Frontend/dist/index.html
+            res.header('Access-Control-Allow-Origin', '*');
+            res.header('Access-Control-Allow-Headers', 'Content-type, Authorization');
+            // res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+            res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+            next();
         });
     }
     start(callback) {

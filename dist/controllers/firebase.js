@@ -1,10 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const nivel2_1 = require("./nivel2");
+const nivel1_1 = require("./nivel1");
+const nivel3_1 = require("./nivel3");
 const accountSid = "AC3f8cb29969036e1427288dc218d27a2b";
 const authToken = "49aa9f42172953a7e823721a1ed32439";
 const client = require("twilio")(accountSid, authToken);
 var admin = require("firebase-admin");
 var bodyParser = require("body-parser");
+var code;
+var theNumber;
+var misala;
+var mipref;
 admin.initializeApp({
     credential: admin.credential.cert(require("./KEYFB.json")),
     databaseURL: "https://proyectofinalcodigo5-82c87.firebaseio.com"
@@ -22,6 +29,47 @@ exports.buscarUsuarioId = (req, res) => {
         res.json(data);
     });
 };
+// export function confirmationCode(req: any, res1: Response) {
+//   // aca me llega el codigo que pone el usuario
+//   console.log('-----confirmation code------');
+//   console.log(req.body.code);
+//   console.log(code);
+//   if (req.body.code == code) {
+//     // try {
+//     Usuario.exists({ usu_number: theNumber }, (err: any, res: any) => {
+//       if (res == true) {
+//         Usuario.findOne({ 'usu_number': theNumber }, 'usu_nick', function (err: any, person: any) {
+//           if (err) {
+//             console.log(err);
+//           } else {
+//             console.log(person);
+//             res1.json({ succes: 'yea', usuario: person.usu_nick });
+//           }
+//           // Prints "Space Ghost is a talk show host".
+//         });
+//         // redirijo a la sala con todo desbloqueado para que pueda escribir
+//       } else {
+//         const userNick = Math.round(Math.random() * 10000000000)
+//         const usuario = new Usuario({ usu_number: theNumber, usu_nick: userNick });
+//         usuario.save(function (err: any) {
+//           if (err) {
+//             console.log('NOOOO ha sido guardado pe chino');
+//             // saved!
+//           } else {
+//             res1.status(200).json({ succes: 'yea', usuario: userNick });
+//             console.log('esta REguardado');
+//           }
+//         });
+//       }
+//     })
+//     // } catch (err) {
+//     //   console.log(err);
+//     // }
+//   } else {
+//     let fail = 'clave NO correcta';
+//     res1.json(fail);
+//   }
+// }
 // export let buscarCoordenadas = (req: Request, res: Response) => {
 //   let lat = req.body.lat;
 //   let lng = req.body.lng;
@@ -116,6 +164,67 @@ exports.registrarUsuario = (req, res) => {
             });
         }
     });
+};
+exports.LatLongPref = (req, res) => {
+    let pref = req.body.pref;
+    let lat = req.body.lat;
+    let long = req.body.long;
+    let misala;
+    let mipref;
+    console.log(`aqui llega las position- lat: ${Number(lat)} ,
+    long:${Number(long)},
+    pref: ${Number(pref)} `);
+    if (pref == 1) {
+        console.log("Back");
+        for (let i = 0; i < nivel1_1.sala01.length; i++) {
+            // console.log("Back02");
+            // son negativos por lo tanto cambia de signo
+            if ((lat <= (nivel1_1.sala01[i][3][1])) &&
+                (lat >= (nivel1_1.sala01[i][0][1])) &&
+                (long >= (nivel1_1.sala01[i][0][0])) &&
+                (long <= (nivel1_1.sala01[i][3][0]))) {
+                console.log(`User  You are in sala ${i + 1} `);
+                misala = i + 1;
+                mipref = 1;
+                res.json({ misala: misala, mipref: mipref });
+                return;
+            }
+        }
+    }
+    else if (pref == 2) {
+        for (let i = 0; i < nivel2_1.sala02.length; i++) {
+            // son negativos por lo tanto cambia de signo
+            if (lat >= nivel2_1.sala02[i][3][1] &&
+                lat <= nivel2_1.sala02[i][0][1] &&
+                long <= nivel2_1.sala02[i][0][0] &&
+                long >= nivel2_1.sala02[i][3][0]) {
+                console.log(`User  You are in sala ${i + 1} `);
+                misala = i + 1;
+                mipref = 2;
+                res.json({ misala: misala, mipref: mipref });
+                return;
+            }
+        }
+    }
+    else if (pref == 3) {
+        for (let i = 0; i < nivel1_1.sala01.length; i++) {
+            // son negativos por lo tanto cambia de signo
+            if (lat >= nivel3_1.sala03[i][3][1] &&
+                lat <= nivel3_1.sala03[i][0][1] &&
+                long <= nivel3_1.sala03[i][0][0] &&
+                long >= nivel3_1.sala03[i][3][0]) {
+                console.log(`User  You are in sala ${i + 1} `);
+                misala = i + 1;
+                mipref = 3;
+                res.json({ misala: misala, mipref: mipref });
+                return;
+            }
+        }
+    }
+    else {
+        res.json({ Mensaje: "Error!!" });
+        console.log("else");
+    }
 };
 // export let coordenada = () => {
 //   console.log(sala02.length);

@@ -176,24 +176,24 @@ export let LatLongPref = (req: Request, res: Response)=> {
   let pref =req.body.pref;
   let lat=req.body.lat;
   let long=req.body.long;
+  let misala
+  let mipref
   console.log(
     `aqui llega las position- lat: ${Number(lat)} ,
     long:${Number(long)},
     pref: ${Number(pref)} `
   );
-  console.log("Funcion");
-  res.json({Mensaje:"Error!!"})
-  
-  console.log(req.body.pref);
-
   if ( pref == 1) {
+  console.log("Back");
+  
     for (let i = 0; i < sala01.length; i++) {
+      // console.log("Back02");
       // son negativos por lo tanto cambia de signo
       if (
-        lat >= sala01[i][3][1] &&
-        lat <= sala01[i][0][1] &&
-        long <= sala01[i][0][0] &&
-        long >= sala01[i][3][0]
+        (lat <= (sala01[i][3][1])) &&
+        (lat >= (sala01[i][0][1])) &&
+        (long >= (sala01[i][0][0])) &&
+        (long <= (sala01[i][3][0]))
       ) {
         console.log(`User  You are in sala ${i + 1} `);
         misala = i + 1;
@@ -201,8 +201,9 @@ export let LatLongPref = (req: Request, res: Response)=> {
         res.json({ misala: misala, mipref: mipref });
         return;
       }
-    }
-  } else if (pref == 2) {
+    
+  }
+} else if (pref == 2) {
     for (let i = 0; i < sala02.length; i++) {
       // son negativos por lo tanto cambia de signo
       if (
@@ -237,6 +238,8 @@ export let LatLongPref = (req: Request, res: Response)=> {
     }
   }else{
     res.json({Mensaje:"Error!!"})
+    console.log("else");
+    
   }
 }
 

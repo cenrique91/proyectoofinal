@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.salas03 = [
+exports.sala03 = [
     [
         ["-71.500000", "-16.383333"],
         ["-71.500000", "-16.386111"],
