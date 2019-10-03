@@ -128,7 +128,7 @@ export let registrarUsuario = (req: Request, res: Response) => {
     .orderByKey()
     .equalTo(usuario.telf)
     .once("value", (snapshot: any) => {
-      var data = snapshot.val();
+      var data:any = snapshot.val();
       // console.log(data);
       // res.json(data);
       if (!data) {
@@ -164,9 +164,10 @@ export let registrarUsuario = (req: Request, res: Response) => {
               });
           });
       } else {
+        let nick=data.usu_nick;
         res.status(200).json({
           error: "El numero ingresado ya se encuentra registrado",
-          x,data
+          x,nick
         });
       }
     });
