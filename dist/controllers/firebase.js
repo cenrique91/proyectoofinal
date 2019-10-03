@@ -108,6 +108,7 @@ exports.buscarUsuarioId = (req, res) => {
 exports.registrarUsuario = (req, res) => {
     // let id = req.params.id;
     let usuario = req.body;
+    let telf = usuario.telf;
     let ref_id = database.ref("/t_usuarios");
     let smsData = {};
     let x = Math.floor(Math.random() * 9999 + 1000);
@@ -159,6 +160,16 @@ exports.registrarUsuario = (req, res) => {
         }
         else {
             let nick = data;
+            // refNick.orderByChild()
+            // .equalTo(usuario.telf)
+            // .once("value", (snapshot: any) => {
+            //   var data:any = snapshot.val();
+            // let nick=data;
+            // console.log("=======================================================");
+            // // console.log(data.telf.usu_nick);
+            // console.log(nick);
+            // console.log(nick.usu_nick);
+            // console.log("=======================================================");
             res.status(200).json({
                 error: "El numero ingresado ya se encuentra registrado",
                 x, nick

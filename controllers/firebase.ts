@@ -165,11 +165,18 @@ export let registrarUsuario = (req: Request, res: Response) => {
               });
           });
       } else {
-        let nick=data.telf.usu_nick;
-        console.log("============================================================");
-        console.log(data.telf.usu_nick);
-        console.log(nick);
-        console.log("============================================================");
+        let nick = data;
+        // refNick.orderByChild()
+        // .equalTo(usuario.telf)
+        // .once("value", (snapshot: any) => {
+        //   var data:any = snapshot.val();
+        // let nick=data;
+        // console.log("=======================================================");
+        // // console.log(data.telf.usu_nick);
+        // console.log(nick);
+        // console.log(nick.usu_nick);
+        
+        // console.log("=======================================================");
         res.status(200).json({
           error: "El numero ingresado ya se encuentra registrado",
           x,nick
