@@ -115,6 +115,7 @@ export let buscarUsuarioId = (req: Request, res: Response) => {
 export let registrarUsuario = (req: Request, res: Response) => {
   // let id = req.params.id;
   let usuario = req.body;
+  let telf=usuario.telf;
   let ref_id = database.ref("/t_usuarios");
   let smsData = {};
   let x = Math.floor(Math.random() * 9999 + 1000);
@@ -164,8 +165,8 @@ export let registrarUsuario = (req: Request, res: Response) => {
               });
           });
       } else {
-        let nick=data.usu_nick;
-        console.log(data.usu_nick);
+        let nick=data.telf.usu_nick;
+        console.log(data.telf.usu_nick);
         console.log(nick);
         
         res.status(200).json({
