@@ -18,7 +18,7 @@ const firebase_controller = __importStar(require("./../controllers/firebase"));
 exports.router = express_1.Router();
 exports.mensaje_router = express_1.Router();
 exports.router.get("/enviarmensaje", sms_1.enviarMensaje);
-// router.get("/buscar", firebase_controller.buscarCoordenadas);
+// router.get("/buscar", firebase_controller.coordenada);
 exports.router.get('/getUsuarioId/:id', firebase_controller.buscarUsuarioId);
 exports.router.post("/registrarUsuario", firebase_controller.registrarUsuario);
 exports.router.post('/positions', firebase_controller.LatLongPref);

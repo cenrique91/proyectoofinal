@@ -8,7 +8,7 @@ export const router = Router();
 export let mensaje_router = Router();
 
 router.get("/enviarmensaje", enviarMensaje);
-// router.get("/buscar", firebase_controller.buscarCoordenadas);
+// router.get("/buscar", firebase_controller.coordenada);
 
 router.get('/getUsuarioId/:id',firebase_controller.buscarUsuarioId);
 router.post("/registrarUsuario", firebase_controller.registrarUsuario);

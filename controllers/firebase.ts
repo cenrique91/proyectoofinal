@@ -139,7 +139,7 @@ export let registrarUsuario = (req: Request, res: Response) => {
             usu_nom: usuario.nombres,
             usu_ape: usuario.apellidos,
             usu_fech_nac: usuario.fecha_nac,
-            usu_nick: usuario.nick,
+            usu_nick: `Usuario${x}`,
             usu_foto: ``,
             usu_pos: {
               lat: ``,
@@ -166,7 +166,7 @@ export let registrarUsuario = (req: Request, res: Response) => {
       } else {
         res.status(200).json({
           error: "El numero ingresado ya se encuentra registrado",
-          x
+          x,data
         });
       }
     });
@@ -247,16 +247,16 @@ export let LatLongPref = (req: Request, res: Response)=> {
 // export let coordenada = () => {
 //   console.log(sala02.length);
 
-//   for (let i = 0; i < sala02.length; i++) {
-//     // let ref1 = database.ref(`/t_cuadrantes/sala01/${i}`);
-//     for (let j = 0; j < sala02[i].length; j++) {
-//       for (let k = 0; k < sala02[i][j].length; k++) {
-//         let ref1 = database.ref(`/t_cuadrantes/sala01/${i}/${j}`);
-//         ref1.set({ lng: sala02[i][j][k], lat: sala02[i][j][k + 1] });
-//         k++;
-//       }
-//     }
-//   }
+  // for (let i = 0; i < sala02.length; i++) {
+  //   // let ref1 = database.ref(`/t_cuadrantes/sala01/${i}`);
+  //   for (let j = 0; j < sala02[i].length; j++) {
+  //     for (let k = 0; k < sala02[i][j].length; k++) {
+        // let ref1 = database.ref(`/t_cuadrantes`);
+        // ref1.set({abcc:"a"});
+  //       k++;
+  //     }
+  //   }
+  // }
 // };
 // let sala02 = [
 //   [
