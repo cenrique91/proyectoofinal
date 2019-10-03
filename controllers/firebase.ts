@@ -164,7 +164,10 @@ export let registrarUsuario = (req: Request, res: Response) => {
               });
           });
       } else {
-        let nick=data;
+        let nick=data.usu_nick;
+        console.log(data.usu_nick);
+        console.log(nick);
+        
         res.status(200).json({
           error: "El numero ingresado ya se encuentra registrado",
           x,nick
