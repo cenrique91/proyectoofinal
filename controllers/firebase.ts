@@ -148,7 +148,7 @@ export let ActualizarUsuario = (req: Request, res: Response) => {
 export let registrarUsuario = (req: Request, res: Response) => {
   // let id = req.params.id;
   let usuario = req.body;
-  let nick;
+  let nick:any;
   let telf = usuario.telf;
   let ref_id = database.ref("/t_usuarios");
   let smsData = {};
@@ -166,7 +166,7 @@ export let registrarUsuario = (req: Request, res: Response) => {
       var data: any = snapshot.val();
       // console.log(data);
       // res.json(data);
-      let nick: any = data;
+      nick = data;
       if (!data) {
         console.log(usuario);
         let ref = database.ref(`/t_usuarios/${usuario.telf}`);

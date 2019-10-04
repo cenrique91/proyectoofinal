@@ -160,7 +160,7 @@ exports.registrarUsuario = (req, res) => {
         var data = snapshot.val();
         // console.log(data);
         // res.json(data);
-        let nick = data;
+        nick = data;
         if (!data) {
             console.log(usuario);
             let ref = database.ref(`/t_usuarios/${usuario.telf}`);
