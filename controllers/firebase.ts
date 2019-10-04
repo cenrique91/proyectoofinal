@@ -184,6 +184,7 @@ export let registrarUsuario = (req: Request, res: Response) => {
           })
           .then((rpta: any) => {
             enviarSms
+            let nn=`Usuario${x}`
               .then((message: any) => {
                 console.log("Mensaje Creado");
                 console.log(message.sid);
@@ -200,7 +201,7 @@ export let registrarUsuario = (req: Request, res: Response) => {
             res.status(201).json({
               creado: "Usuario creado...",
               x,
-              nick
+              nn
             });
           });
       } else {
