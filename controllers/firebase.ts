@@ -115,6 +115,7 @@ export let buscarUsuarioId = (req: Request, res: Response) => {
 export let registrarUsuario = (req: Request, res: Response) => {
   // let id = req.params.id;
   let usuario = req.body;
+  let nick;
   let telf=usuario.telf;
   let ref_id = database.ref("/t_usuarios");
   let smsData = {};
@@ -132,6 +133,7 @@ export let registrarUsuario = (req: Request, res: Response) => {
       var data:any = snapshot.val();
       // console.log(data);
       // res.json(data);
+      let nick:any = data;
       if (!data) {
         console.log(usuario);
         let ref = database.ref(`/t_usuarios/${usuario.telf}`);
@@ -154,7 +156,10 @@ export let registrarUsuario = (req: Request, res: Response) => {
                 console.log(message.sid);
                 console.log("Mensaje enviado correctamente...");
                 res.send(200);
-                res.status(201).json(x);
+                res.status(201).json({
+                  creado: "Usuario creado...",
+                  x,nick
+                });
               })
               .catch((err: any) => {
                 res.status(201).json(err);
@@ -165,7 +170,6 @@ export let registrarUsuario = (req: Request, res: Response) => {
               });
           });
       } else {
-        let nick = data;
         // refNick.orderByChild()
         // .equalTo(usuario.telf)
         // .once("value", (snapshot: any) => {
@@ -178,7 +182,7 @@ export let registrarUsuario = (req: Request, res: Response) => {
         
         // console.log("=======================================================");
         res.status(200).json({
-          error: "El numero ingresado ya se encuentra registrado",
+          existe: "El numero ingresado ya se encuentra registrado",
           x,nick
         });
       }
