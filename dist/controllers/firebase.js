@@ -183,11 +183,6 @@ exports.registrarUsuario = (req, res) => {
                     console.log(message.sid);
                     console.log("Mensaje enviado correctamente...");
                     // res.send(200);
-                    res.status(201).json({
-                        creado: "Usuario creado...",
-                        x,
-                        nick
-                    });
                 })
                     .catch((err) => {
                     res.status(201).json(err);
@@ -195,6 +190,11 @@ exports.registrarUsuario = (req, res) => {
                     .catch((error) => {
                     console.log(error);
                     res.send("Error!!!" + error);
+                });
+                res.status(201).json({
+                    creado: "Usuario creado...",
+                    x,
+                    nick
                 });
             });
         }

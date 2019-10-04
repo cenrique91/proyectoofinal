@@ -110,7 +110,7 @@ export let buscarUsuarioId = (req: Request, res: Response) => {
 //       });
 //     });
 // };
-let m="";
+let m = "";
 export let ActualizarUsuario = (req: Request, res: Response) => {
   let usuario = req.body;
   let telf = usuario.telf;
@@ -189,11 +189,6 @@ export let registrarUsuario = (req: Request, res: Response) => {
                 console.log(message.sid);
                 console.log("Mensaje enviado correctamente...");
                 // res.send(200);
-                res.status(201).json({
-                  creado: "Usuario creado...",
-                  x,
-                  nick
-                });
               })
               .catch((err: any) => {
                 res.status(201).json(err);
@@ -202,6 +197,11 @@ export let registrarUsuario = (req: Request, res: Response) => {
                 console.log(error);
                 res.send("Error!!!" + error);
               });
+            res.status(201).json({
+              creado: "Usuario creado...",
+              x,
+              nick
+            });
           });
       } else {
         res.status(200).json({
