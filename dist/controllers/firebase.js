@@ -129,7 +129,7 @@ exports.ActualizarUsuario = (req, res) => {
             .once("value", (snapshot) => {
             var data = snapshot.val();
             let nick = data;
-            res.status(201).json({
+            res.send(201).json({
                 update: "Usuario actualizado...",
                 nick
             });
