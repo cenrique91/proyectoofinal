@@ -113,12 +113,32 @@ export let buscarUsuarioId = (req: Request, res: Response) => {
 
 export let ActualizarUsuario = (req: Request, res: Response) => {
   let usuario = req.body;
-  let telf=usuario.telf;
-  let userRef=database.ref("/t_usuarios")
+  let telf = usuario.telf;
+  console.log(telf);
+  // admin.database().ref().child('/t_usuarios/' + telf)
+  //       .update({ usu_nom: "New title"});
+  let userRef = database.ref("/t_usuarios");
   userRef.child(telf).update({
-    usu_ape:usuario.apellidos,
-    usu_nom:usuario.nombres,
-    usu_nick:usuario.nick,
+    'usu_ape': usuario.apellidos,
+    'usu_nom': usuario.nombres,
+    'usu_nick': usuario.nick
+  }).then((result:any) => {
+    console.log(result);
+    let ref_id = database.ref("/t_usuarios");
+    ref_id
+    .orderByKey()
+    .equalTo(usuario.telf)
+    .once("value", (snapshot: any) => {
+      var data: any = snapshot.val();
+      let nick: any = data;
+      res.status(201).json({
+        update: "Usuario actualizado...",
+        nick
+      });
+    
+  }).catch((err:any) => {
+    console.log(err);
+    
   });
 };
 
@@ -165,7 +185,7 @@ export let registrarUsuario = (req: Request, res: Response) => {
             console.log("Mensaje Creado");
             // console.log(message.sid);
             console.log("Mensaje enviado correctamente...");
-            res.send(200);
+            // res.send(200);
             res.status(201).json({
               creado: "Usuario creado...",
               x,
