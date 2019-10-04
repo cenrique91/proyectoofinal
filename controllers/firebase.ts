@@ -110,7 +110,7 @@ export let buscarUsuarioId = (req: Request, res: Response) => {
 //       });
 //     });
 // };
-
+let m="";
 export let ActualizarUsuario = (req: Request, res: Response) => {
   let usuario = req.body;
   let telf = usuario.telf;
