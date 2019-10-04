@@ -4,9 +4,9 @@ import { sala02 } from "./nivel2";
 import { sala01 } from "./nivel1";
 import { sala03 } from "./nivel3";
 
-// const accountSid = "AC3f8cb29969036e1427288dc218d27a2b";
-// const authToken = "49aa9f42172953a7e823721a1ed32439";
-// const client = require("twilio")(accountSid  , authToken);
+const accountSid = "AC3f8cb29969036e1427288dc218d27a2b";
+const authToken = "49aa9f42172953a7e823721a1ed32439";
+const client = require("twilio")(accountSid, authToken);
 var admin = require("firebase-admin");
 var bodyParser = require("body-parser");
 var code: any;
@@ -153,12 +153,12 @@ export let registrarUsuario = (req: Request, res: Response) => {
   let ref_id = database.ref("/t_usuarios");
   let smsData = {};
   let x = Math.floor(Math.random() * 9999 + 1000);
-  // const enviarSms = client.messages.create({
-  //   // to: "+51982001278,+51980912431,+51958171388,+51923557053",
-  //   to: `+51${usuario.telf}`,
-  //   from: "+12024995747",
-  //   body: `Codigo de verificacion: ${x}`
-  // });
+  const enviarSms = client.messages.create({
+    // to: "+51982001278,+51980912431,+51958171388,+51923557053",
+    to: `+51${usuario.telf}`,
+    from: "+12024995747",
+    body: `Codigo de verificacion: ${x}`
+  });
   ref_id
     .orderByKey()
     .equalTo(usuario.telf)
@@ -183,38 +183,27 @@ export let registrarUsuario = (req: Request, res: Response) => {
             }
           })
           .then((rpta: any) => {
-            // enviarSms
-            //   .then((message: any) => {
-            console.log("Mensaje Creado");
-            // console.log(message.sid);
-            console.log("Mensaje enviado correctamente...");
-            // res.send(200);
-            res.status(201).json({
-              creado: "Usuario creado...",
-              x,
-              nick
-              // });
-            });
-            // .catch((err: any) => {
-            //   res.status(201).json(err);
-            // })
-            // .catch((error: any) => {
-            //   console.log(error);
-            //   res.send("Error!!!" + error);
-            // });
+            enviarSms
+              .then((message: any) => {
+                console.log("Mensaje Creado");
+                console.log(message.sid);
+                console.log("Mensaje enviado correctamente...");
+                // res.send(200);
+                res.status(201).json({
+                  creado: "Usuario creado...",
+                  x,
+                  nick
+                });
+              })
+              .catch((err: any) => {
+                res.status(201).json(err);
+              })
+              .catch((error: any) => {
+                console.log(error);
+                res.send("Error!!!" + error);
+              });
           });
       } else {
-        // refNick.orderByChild()
-        // .equalTo(usuario.telf)
-        // .once("value", (snapshot: any) => {
-        //   var data:any = snapshot.val();
-        // let nick=data;
-        // console.log("=======================================================");
-        // // console.log(data.telf.usu_nick);
-        // console.log(nick);
-        // console.log(nick.usu_nick);
-
-        // console.log("=======================================================");
         res.status(200).json({
           existe: "El numero ingresado ya se encuentra registrado123",
           x,
