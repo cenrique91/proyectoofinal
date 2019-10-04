@@ -3,9 +3,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const nivel2_1 = require("./nivel2");
 const nivel1_1 = require("./nivel1");
 const nivel3_1 = require("./nivel3");
-const accountSid = "AC3f8cb29969036e1427288dc218d27a2b";
-const authToken = "49aa9f42172953a7e823721a1ed32439";
-const client = require("twilio")(accountSid, authToken);
+// const accountSid = "AC3f8cb29969036e1427288dc218d27a2b";
+// const authToken = "49aa9f42172953a7e823721a1ed32439";
+// const client = require("twilio")(accountSid  , authToken);
 var admin = require("firebase-admin");
 var bodyParser = require("body-parser");
 var code;
@@ -105,19 +105,30 @@ exports.buscarUsuarioId = (req, res) => {
 //       });
 //     });
 // };
+exports.ActualizarUsuario = (req, res) => {
+    let usuario = req.body;
+    let telf = usuario.telf;
+    let userRef = database.ref("/t_usuarios");
+    userRef.child(telf).update({
+        usu_ape: usuario.apellidos,
+        usu_nom: usuario.nombres,
+        usu_nick: usuario.nick,
+    });
+};
 exports.registrarUsuario = (req, res) => {
     // let id = req.params.id;
     let usuario = req.body;
+    let nick;
     let telf = usuario.telf;
     let ref_id = database.ref("/t_usuarios");
     let smsData = {};
     let x = Math.floor(Math.random() * 9999 + 1000);
-    const enviarSms = client.messages.create({
-        // to: "+51982001278,+51980912431,+51958171388,+51923557053",
-        to: `+51${usuario.telf}`,
-        from: "+12024995747",
-        body: `Codigo de verificacion: ${x}`
-    });
+    // const enviarSms = client.messages.create({
+    //   // to: "+51982001278,+51980912431,+51958171388,+51923557053",
+    //   to: `+51${usuario.telf}`,
+    //   from: "+12024995747",
+    //   body: `Codigo de verificacion: ${x}`
+    // });
     ref_id
         .orderByKey()
         .equalTo(usuario.telf)
@@ -125,6 +136,7 @@ exports.registrarUsuario = (req, res) => {
         var data = snapshot.val();
         // console.log(data);
         // res.json(data);
+        let nick = data;
         if (!data) {
             console.log(usuario);
             let ref = database.ref(`/t_usuarios/${usuario.telf}`);
@@ -141,25 +153,28 @@ exports.registrarUsuario = (req, res) => {
                 }
             })
                 .then((rpta) => {
-                enviarSms
-                    .then((message) => {
-                    console.log("Mensaje Creado");
-                    console.log(message.sid);
-                    console.log("Mensaje enviado correctamente...");
-                    res.send(200);
-                    res.status(201).json(x);
-                })
-                    .catch((err) => {
-                    res.status(201).json(err);
-                })
-                    .catch((error) => {
-                    console.log(error);
-                    res.send("Error!!!" + error);
+                // enviarSms
+                //   .then((message: any) => {
+                console.log("Mensaje Creado");
+                // console.log(message.sid);
+                console.log("Mensaje enviado correctamente...");
+                res.send(200);
+                res.status(201).json({
+                    creado: "Usuario creado...",
+                    x,
+                    nick
+                    // });
                 });
+                // .catch((err: any) => {
+                //   res.status(201).json(err);
+                // })
+                // .catch((error: any) => {
+                //   console.log(error);
+                //   res.send("Error!!!" + error);
+                // });
             });
         }
         else {
-            let nick = data;
             // refNick.orderByChild()
             // .equalTo(usuario.telf)
             // .once("value", (snapshot: any) => {
@@ -171,8 +186,9 @@ exports.registrarUsuario = (req, res) => {
             // console.log(nick.usu_nick);
             // console.log("=======================================================");
             res.status(200).json({
-                error: "El numero ingresado ya se encuentra registrado",
-                x, nick
+                existe: "El numero ingresado ya se encuentra registrado123",
+                x,
+                nick
             });
         }
     });
@@ -191,10 +207,10 @@ exports.LatLongPref = (req, res) => {
         for (let i = 0; i < nivel1_1.sala01.length; i++) {
             // console.log("Back02");
             // son negativos por lo tanto cambia de signo
-            if ((lat <= (nivel1_1.sala01[i][3][1])) &&
-                (lat >= (nivel1_1.sala01[i][0][1])) &&
-                (long >= (nivel1_1.sala01[i][0][0])) &&
-                (long <= (nivel1_1.sala01[i][3][0]))) {
+            if (lat <= nivel1_1.sala01[i][3][1] &&
+                lat >= nivel1_1.sala01[i][0][1] &&
+                long >= nivel1_1.sala01[i][0][0] &&
+                long <= nivel1_1.sala01[i][3][0]) {
                 console.log(`User  You are in sala ${i + 1} `);
                 misala = i + 1;
                 mipref = 1;

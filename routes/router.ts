@@ -13,6 +13,7 @@ router.get("/enviarmensaje", enviarMensaje);
 router.get('/getUsuarioId/:id',firebase_controller.buscarUsuarioId);
 router.post("/registrarUsuario", firebase_controller.registrarUsuario);
 router.post('/positions', firebase_controller.LatLongPref);
+router.put('/actualizarUsuario',firebase_controller.ActualizarUsuario);
 
 // router.get("/getUsuarioId", (req: Request, res: Response) => {
 //   // const id = req.body.id;

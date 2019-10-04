@@ -22,6 +22,7 @@ exports.router.get("/enviarmensaje", sms_1.enviarMensaje);
 exports.router.get('/getUsuarioId/:id', firebase_controller.buscarUsuarioId);
 exports.router.post("/registrarUsuario", firebase_controller.registrarUsuario);
 exports.router.post('/positions', firebase_controller.LatLongPref);
+exports.router.put('/actualizarUsuario', firebase_controller.ActualizarUsuario);
 // router.get("/getUsuarioId", (req: Request, res: Response) => {
 //   // const id = req.body.id;
 //   const data = Server.instance.buscarUsuarioId();

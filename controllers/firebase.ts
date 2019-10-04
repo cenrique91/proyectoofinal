@@ -1,8 +1,8 @@
 import { Router, Request, Response } from "express";
 import { enviarMensaje } from "./sms";
-import {sala02} from "./nivel2";
-import {sala01} from "./nivel1";
-import {sala03} from "./nivel3";
+import { sala02 } from "./nivel2";
+import { sala01 } from "./nivel1";
+import { sala03 } from "./nivel3";
 
 // const accountSid = "AC3f8cb29969036e1427288dc218d27a2b";
 // const authToken = "49aa9f42172953a7e823721a1ed32439";
@@ -31,7 +31,6 @@ export let buscarUsuarioId = (req: Request, res: Response) => {
       res.json(data);
     });
 };
-
 
 // export function confirmationCode(req: any, res1: Response) {
 //   // aca me llega el codigo que pone el usuario
@@ -106,17 +105,28 @@ export let buscarUsuarioId = (req: Request, res: Response) => {
 //         if (lat >= val.lat && lat <= val.lat) {
 //           console.log(val);
 //           console.log("ok");
-          
+
 //         }
 //       });
 //     });
 // };
 
+export let ActualizarUsuario = (req: Request, res: Response) => {
+  let usuario = req.body;
+  let telf=usuario.telf;
+  let userRef=database.ref("/t_usuarios")
+  userRef.child(telf).update({
+    usu_ape:usuario.apellidos,
+    usu_nom:usuario.nombres,
+    usu_nick:usuario.nick,
+  });
+};
+
 export let registrarUsuario = (req: Request, res: Response) => {
   // let id = req.params.id;
   let usuario = req.body;
   let nick;
-  let telf=usuario.telf;
+  let telf = usuario.telf;
   let ref_id = database.ref("/t_usuarios");
   let smsData = {};
   let x = Math.floor(Math.random() * 9999 + 1000);
@@ -130,10 +140,10 @@ export let registrarUsuario = (req: Request, res: Response) => {
     .orderByKey()
     .equalTo(usuario.telf)
     .once("value", (snapshot: any) => {
-      var data:any = snapshot.val();
+      var data: any = snapshot.val();
       // console.log(data);
       // res.json(data);
-      let nick:any = data;
+      let nick: any = data;
       if (!data) {
         console.log(usuario);
         let ref = database.ref(`/t_usuarios/${usuario.telf}`);
@@ -152,22 +162,23 @@ export let registrarUsuario = (req: Request, res: Response) => {
           .then((rpta: any) => {
             // enviarSms
             //   .then((message: any) => {
-                console.log("Mensaje Creado");
-                // console.log(message.sid);
-                console.log("Mensaje enviado correctamente...");
-                res.send(200);
-                res.status(201).json({
-                  creado: "Usuario creado...",
-                  x,nick
-                // });
-              })
-              // .catch((err: any) => {
-              //   res.status(201).json(err);
-              // })
-              // .catch((error: any) => {
-              //   console.log(error);
-              //   res.send("Error!!!" + error);
+            console.log("Mensaje Creado");
+            // console.log(message.sid);
+            console.log("Mensaje enviado correctamente...");
+            res.send(200);
+            res.status(201).json({
+              creado: "Usuario creado...",
+              x,
+              nick
               // });
+            });
+            // .catch((err: any) => {
+            //   res.status(201).json(err);
+            // })
+            // .catch((error: any) => {
+            //   console.log(error);
+            //   res.send("Error!!!" + error);
+            // });
           });
       } else {
         // refNick.orderByChild()
@@ -179,49 +190,49 @@ export let registrarUsuario = (req: Request, res: Response) => {
         // // console.log(data.telf.usu_nick);
         // console.log(nick);
         // console.log(nick.usu_nick);
-        
+
         // console.log("=======================================================");
         res.status(200).json({
-          existe: "El numero ingresado ya se encuentra registrado",
-          x,nick
+          existe: "El numero ingresado ya se encuentra registrado123",
+          x,
+          nick
         });
       }
     });
 };
 
-export let LatLongPref = (req: Request, res: Response)=> {
-  let pref =req.body.pref;
-  let lat=req.body.lat;
-  let long=req.body.long;
-  let misala
-  let mipref
-  
+export let LatLongPref = (req: Request, res: Response) => {
+  let pref = req.body.pref;
+  let lat = req.body.lat;
+  let long = req.body.long;
+  let misala;
+  let mipref;
+
   console.log(
     `aqui llega las position- lat: ${Number(lat)} ,
     long:${Number(long)},
     pref: ${pref} `
   );
-  if ( pref == 1) {
-  console.log("Back");
-  
+  if (pref == 1) {
+    console.log("Back");
+
     for (let i = 0; i < sala01.length; i++) {
       // console.log("Back02");
       // son negativos por lo tanto cambia de signo
       if (
-        (lat <= (sala01[i][3][1])) &&
-        (lat >= (sala01[i][0][1])) &&
-        (long >= (sala01[i][0][0])) &&
-        (long <= (sala01[i][3][0]))
+        lat <= sala01[i][3][1] &&
+        lat >= sala01[i][0][1] &&
+        long >= sala01[i][0][0] &&
+        long <= sala01[i][3][0]
       ) {
         console.log(`User  You are in sala ${i + 1} `);
         misala = i + 1;
-        mipref = 1
+        mipref = 1;
         res.json({ misala: misala, mipref: mipref });
         return;
       }
-    
-  }
-} else if (pref == 2) {
+    }
+  } else if (pref == 2) {
     for (let i = 0; i < sala02.length; i++) {
       // son negativos por lo tanto cambia de signo
       if (
@@ -232,12 +243,11 @@ export let LatLongPref = (req: Request, res: Response)=> {
       ) {
         console.log(`User  You are in sala ${i + 1} `);
         misala = i + 1;
-        mipref = 2
+        mipref = 2;
         res.json({ misala: misala, mipref: mipref });
         return;
       }
     }
-
   } else if (pref == 3) {
     for (let i = 0; i < sala01.length; i++) {
       // son negativos por lo tanto cambia de signo
@@ -249,31 +259,30 @@ export let LatLongPref = (req: Request, res: Response)=> {
       ) {
         console.log(`User  You are in sala ${i + 1} `);
         misala = i + 1;
-        mipref = 3
+        mipref = 3;
         res.json({ misala: misala, mipref: mipref });
         return;
       }
     }
-  }else{
-    res.json({Mensaje:"Error!!"})
+  } else {
+    res.json({ Mensaje: "Error!!" });
     console.log("else");
-    
   }
-}
+};
 
 // export let coordenada = () => {
 //   console.log(sala02.length);
 
-  // for (let i = 0; i < sala02.length; i++) {
-  //   // let ref1 = database.ref(`/t_cuadrantes/sala01/${i}`);
-  //   for (let j = 0; j < sala02[i].length; j++) {
-  //     for (let k = 0; k < sala02[i][j].length; k++) {
-        // let ref1 = database.ref(`/t_cuadrantes`);
-        // ref1.set({abcc:"a"});
-  //       k++;
-  //     }
-  //   }
-  // }
+// for (let i = 0; i < sala02.length; i++) {
+//   // let ref1 = database.ref(`/t_cuadrantes/sala01/${i}`);
+//   for (let j = 0; j < sala02[i].length; j++) {
+//     for (let k = 0; k < sala02[i][j].length; k++) {
+// let ref1 = database.ref(`/t_cuadrantes`);
+// ref1.set({abcc:"a"});
+//       k++;
+//     }
+//   }
+// }
 // };
 // let sala02 = [
 //   [
