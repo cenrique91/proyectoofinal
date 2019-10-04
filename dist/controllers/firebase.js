@@ -163,7 +163,7 @@ exports.registrarUsuario = (req, res) => {
         nick = data;
         if (!data) {
             console.log(usuario);
-            let nn = `Usuario${x}`;
+            nick = `Usuario${x}`;
             let ref = database.ref(`/t_usuarios/${usuario.telf}`);
             ref
                 .set({
@@ -195,7 +195,7 @@ exports.registrarUsuario = (req, res) => {
                 res.status(201).json({
                     creado: "Usuario creado...",
                     x,
-                    nn
+                    nick
                 });
             });
         }
