@@ -118,28 +118,31 @@ export let ActualizarUsuario = (req: Request, res: Response) => {
   // admin.database().ref().child('/t_usuarios/' + telf)
   //       .update({ usu_nom: "New title"});
   let userRef = database.ref("/t_usuarios");
-  userRef.child(telf).update({
-    'usu_ape': usuario.apellidos,
-    'usu_nom': usuario.nombres,
-    'usu_nick': usuario.nick
-  }).then((result:any) => {
-    console.log(result);
-    let ref_id = database.ref("/t_usuarios");
-    ref_id
-    .orderByKey()
-    .equalTo(usuario.telf)
-    .once("value", (snapshot: any) => {
-      var data: any = snapshot.val();
-      let nick: any = data;
-      res.status(201).json({
-        update: "Usuario actualizado...",
-        nick
-      });
-    
-  }).catch((err:any) => {
-    console.log(err);
-    
-  });
+  userRef
+    .child(telf)
+    .update({
+      usu_ape: usuario.apellidos,
+      usu_nom: usuario.nombres,
+      usu_nick: usuario.nick
+    })
+    .then((result: any) => {
+      console.log(result);
+      let ref_id = database.ref("/t_usuarios");
+      ref_id
+        .orderByKey()
+        .equalTo(usuario.telf)
+        .once("value", (snapshot: any) => {
+          var data: any = snapshot.val();
+          let nick: any = data;
+          res.status(201).json({
+            update: "Usuario actualizado...",
+            nick
+          });
+        })
+        .catch((err: any) => {
+          console.log(err);
+        });
+    });
 };
 
 export let registrarUsuario = (req: Request, res: Response) => {
