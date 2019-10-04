@@ -169,6 +169,7 @@ export let registrarUsuario = (req: Request, res: Response) => {
       nick = data;
       if (!data) {
         console.log(usuario);
+        let nn=`Usuario${x}`;
         let ref = database.ref(`/t_usuarios/${usuario.telf}`);
         ref
           .set({
@@ -184,7 +185,6 @@ export let registrarUsuario = (req: Request, res: Response) => {
           })
           .then((rpta: any) => {
             enviarSms
-            let nn=`Usuario${x}`
               .then((message: any) => {
                 console.log("Mensaje Creado");
                 console.log(message.sid);
