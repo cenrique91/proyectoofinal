@@ -4,8 +4,7 @@ import { sala02 } from "./nivel2";
 import { sala01 } from "./nivel1";
 import { sala03 } from "./nivel3";
 
-const accountSid = "AC3f8cb29969036e1427288dc218d27a2b";
-const authToken = "49aa9f42172953a7e823721a1ed32439";
+
 const client = require("twilio")(accountSid, authToken);
 var admin = require("firebase-admin");
 var bodyParser = require("body-parser");
@@ -14,7 +13,7 @@ var theNumber: any;
 var misala;
 var mipref;
 admin.initializeApp({
-  credential: admin.credential.cert(require("./KEYFB.json")),
+ 
   databaseURL: "https://proyectofinalcodigo5-82c87.firebaseio.com"
 });
 var database = admin.database();
